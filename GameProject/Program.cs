@@ -1,4 +1,5 @@
 ﻿using GameProject.Abstract;
+using GameProject.Adapters;
 using GameProject.Concrete;
 using GameProject.Model;
 using System;
@@ -10,20 +11,13 @@ namespace GameProject
         static void Main(string[] args)
         {
             //Üyelik Adımı
-            Member member = new Member { Id = 1, FirstName = "Melike", LastName = "Özbey", BirthYear = 1994, IdentityNumber="11111111111",Password="123" };
+            Member member = new Member { Id = 1, FirstName = "Melike", LastName = "Özbey", DateOfBirth = new DateTime(1994,1,14), IdentityNumber="11111111111",Password="123" };
 
-            MemberValidationManager memberValidationManager = new MemberValidationManager();
-            bool validate=memberValidationManager.Verify(member);
+            BaseMemberManager memberManager = new MemberManager(new MemberValidationManager());
+            memberManager.Add(member);
 
-            MemberManager memberManager = new MemberManager();
-            if(validate==true)
-            {
-                memberManager.Add(member);
-            }
-            else
-            {
-                Console.WriteLine("Lütfen girmiş olduğunuz Ad, Soyad, Doğum Yılı ve TC No bilgilerinin doğruluğunu kontrol ediniz..");
-            }
+            BaseMemberManager memberManager2 = new MemberManager(new MernisServiceAdapter());
+            memberManager2.Add(member);
 
             //Kampanya Ekle-Sil-Güncelle
 

@@ -10,15 +10,8 @@ namespace GameProject.Concrete
     {
         public bool Verify(Member member)
         {
-            
-            if (member.FirstName == "Melike" && member.LastName == "Özbey" && member.BirthYear==1994 && member.IdentityNumber == "11111111111")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }

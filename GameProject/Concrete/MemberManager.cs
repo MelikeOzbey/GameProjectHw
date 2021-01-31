@@ -6,21 +6,27 @@ using System.Text;
 
 namespace GameProject.Concrete
 {
-    public class MemberManager : IMemberService
+    public class MemberManager : BaseMemberManager
     {
-        public void Add(Member member)
+        IMemberValidation _memberValidation;
+
+        public MemberManager(IMemberValidation memberValidation)
         {
-            Console.WriteLine("Üye Kaydedildi.");
+            _memberValidation = memberValidation;
         }
 
-        public void Delete(int Id)
+        public override void Add(Member member)
         {
-            Console.WriteLine("Üye silindi.");
+            if (_memberValidation.Verify(member))
+            {
+                base.Add(member);
+            }
+            else
+            {
+                Console.WriteLine("Lütfen girmiş olduğunuz Ad, Soyad, Doğum Yılı ve TC No bilgilerinin doğruluğunu kontrol ediniz..");
+            }
         }
 
-        public void Update(int Id)
-        {
-            Console.WriteLine("Üye güncellendi.");
-        }
     }
 }
+
